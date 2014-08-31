@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Policy;
+using Dargon.Distributed;
 using ItzWarty;
 
 namespace Dargon.Distributed
@@ -43,6 +44,36 @@ namespace Dargon.Distributed
             }
          }
          return resultDict;
+      }
+
+      public ISet<K> Filter<TProjection>(ICacheIndex<K, V, TProjection> cacheIndex, TProjection value)
+      {
+         var index = (InMemoryCacheIndex<K, V, TProjection>)cacheIndex;
+         var entries = this.dict.Select(kvp => new InMemoryEntry<K, V>(kvp.Key, kvp.Value, true));
+         var results = entries.Select(entry => new { Key = entry.Key, Projection = index.Projector.Project(entry) }).Where((pair) => pair.Projection.Equals(value));
+         return new HashSet<K>(results.Select(result => result.Key));
+      }
+
+      public ISet<K> Filter<TProjection>(ICacheIndex<K, V, TProjection> cacheIndex, IEntryProcessor<K, IFilterArgument<V, TProjection>, bool> filter)
+      {
+         var index = (InMemoryCacheIndex<K, V, TProjection>)cacheIndex;
+         var entries = this.dict.Select(kvp => new InMemoryEntry<K, IFilterArgument<V, TProjection>>(kvp.Key, new InMemoryFilterArgument<V, TProjection>(kvp.Value, index.Projector.Project(new InMemoryEntry<K, V>(kvp.Key, kvp.Value, true))), true));
+         return new HashSet<K>(entries.Select(entry => entry.Key));
+      }
+
+      public ISet<IEntry<K, V>> FilterEntries<TProjection>(ICacheIndex<K, V, TProjection> cacheIndex, TProjection value)
+      {
+         var index = (InMemoryCacheIndex<K, V, TProjection>)cacheIndex;
+         var entries = this.dict.Select(kvp => new InMemoryEntry<K, V>(kvp.Key, kvp.Value, true));
+         var results = entries.Select(entry => new { Entry = entry, Projection = index.Projector.Project(entry) }).Where((pair) => pair.Projection.Equals(value));
+         return new HashSet<IEntry<K, V>>(results.Select(result => result.Entry));
+      }
+
+      public ISet<IEntry<K, V>> FilterEntries<TProjection>(ICacheIndex<K, V, TProjection> cacheIndex, IEntryProcessor<K, IFilterArgument<V, TProjection>, bool> filter)
+      {
+         var index = (InMemoryCacheIndex<K, V, TProjection>)cacheIndex;
+         var entries = this.dict.Select(kvp => new InMemoryEntry<K, IFilterArgument<V, TProjection>>(kvp.Key, new InMemoryFilterArgument<V, TProjection>(kvp.Value, index.Projector.Project(new InMemoryEntry<K, V>(kvp.Key, kvp.Value, true))), true));
+         return new HashSet<IEntry<K, V>>(entries.Select(e => new InMemoryEntry<K, V>(e.Key, e.Value.Value, e.IsPresent)));
       }
 
       private R InvokeHelper<R>(K key, IEntryProcessor<K, V, R> entryProcessor)
@@ -99,5 +130,35 @@ namespace Dargon.Distributed
 
       public bool IsReadOnly { get { return false; }}
       public string Name { get { return name; } }
+
+      public class InMemoryCacheIndex<TKey, TValue, TProjection> : ICacheIndex<TKey, TValue, TProjection>
+      {
+         private readonly string name;
+         private readonly ICacheProjector<TKey, TValue, TProjection> projector;
+
+         public InMemoryCacheIndex(string name, ICacheProjector<TKey, TValue, TProjection> projector)
+         {
+            this.name = name;
+            this.projector = projector;
+         }
+
+         public string Name { get { return name; } }
+         public ICacheProjector<TKey, TValue, TProjection> Projector { get { return projector; } }
+      }
+
+      public class InMemoryFilterArgument<V, TProjection> : IFilterArgument<V, TProjection>
+      {
+         private readonly V value;
+         private readonly TProjection projection;
+
+         public InMemoryFilterArgument(V value, TProjection projection)
+         {
+            this.value = value;
+            this.projection = projection;
+         }
+
+         public V Value { get { return value; } }
+         public TProjection Projection { get { return projection; } }
+      }
    }
 }
