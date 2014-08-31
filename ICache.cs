@@ -8,6 +8,8 @@ namespace Dargon.Distributed
       R Invoke<R>(K key, IEntryProcessor<K, V, R> entryProcessor);
       IDictionary<K, R> InvokeAll<R>(ISet<K> keys, IEntryProcessor<K, V, R> entryProcessor);
 
+      ICacheIndex<K, V, TProjection> GetIndex<TProjection>(string name);
+
       ISet<K> Filter<TProjection>(ICacheIndex<K, V, TProjection> index, TProjection value);
       ISet<K> Filter<TProjection>(ICacheIndex<K, V, TProjection> index, IEntryProcessor<K, IFilterArgument<V, TProjection>, bool> filter);
 

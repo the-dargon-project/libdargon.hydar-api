@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Policy;
@@ -17,8 +18,13 @@ namespace Dargon.Distributed
       private string name;
       private ConcurrentDictionary<K, V> dict = new ConcurrentDictionary<K, V>();
       private object[] locksBySector = Util.Generate((int)SECTOR_COUNT, i => new object());
+      private IReadOnlyDictionary<string, object> indicesByName = null;
 
-      public InMemoryCache(string name) { this.name = name; }
+      public InMemoryCache(string name, IDictionary<string, object> indicesByName)
+      {
+         this.name = name;
+         this.indicesByName = (IReadOnlyDictionary<string, object>)indicesByName;
+      }
 
       public R Invoke<R>(K key, IEntryProcessor<K, V, R> entryProcessor)
       {
@@ -44,6 +50,11 @@ namespace Dargon.Distributed
             }
          }
          return resultDict;
+      }
+
+      public ICacheIndex<K, V, TProjection> GetIndex<TProjection>(string name)
+      {
+         return (ICacheIndex<K, V, TProjection>)indicesByName[name];
       }
 
       public ISet<K> Filter<TProjection>(ICacheIndex<K, V, TProjection> cacheIndex, TProjection value)
