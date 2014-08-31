@@ -15,15 +15,16 @@ namespace Dargon.Distributed
    {
       private const uint SECTOR_COUNT = 128;
 
-      private string name;
-      private ConcurrentDictionary<K, V> dict = new ConcurrentDictionary<K, V>();
-      private object[] locksBySector = Util.Generate((int)SECTOR_COUNT, i => new object());
-      private IReadOnlyDictionary<string, object> indicesByName = null;
+      private readonly string name;
+      private readonly IReadOnlyDictionary<string, ICacheIndex> indicesByName = null;
 
-      public InMemoryCache(string name, IDictionary<string, object> indicesByName)
+      private readonly ConcurrentDictionary<K, V> dict = new ConcurrentDictionary<K, V>();
+      private readonly object[] locksBySector = Util.Generate((int)SECTOR_COUNT, i => new object());
+
+      public InMemoryCache(string name, IReadOnlyList<ICacheIndex> indicesByName)
       {
          this.name = name;
-         this.indicesByName = (IReadOnlyDictionary<string, object>)indicesByName;
+         this.indicesByName = indicesByName.Aggregate(new Dictionary<string, ICacheIndex>(), (dict, value) => dict.With(d => d.Add(value.Name, value)));
       }
 
       public R Invoke<R>(K key, IEntryProcessor<K, V, R> entryProcessor)
