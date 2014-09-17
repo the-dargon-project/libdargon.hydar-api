@@ -24,7 +24,7 @@ namespace Dargon.Distributed
       public InMemoryCache(string name, IReadOnlyList<ICacheIndex> indicesByName)
       {
          this.name = name;
-         this.indicesByName = indicesByName.Aggregate(new Dictionary<string, ICacheIndex>(), (dict, value) => dict.With(d => d.Add(value.Name, value)));
+         this.indicesByName = (indicesByName ?? new List<ICacheIndex>()).Aggregate(new Dictionary<string, ICacheIndex>(), (dict, value) => dict.With(d => d.Add(value.Name, value)));
       }
 
       public R Invoke<R>(K key, IEntryProcessor<K, V, R> entryProcessor)
