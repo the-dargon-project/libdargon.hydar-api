@@ -39,8 +39,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICachePuppet.cs" />
+    <Compile Include="LocalCachePuppet.cs" />
+    <Compile Include="CancelCommitRequest.cs" />
+    <Compile Include="FinishCommitRequest.cs" />
+    <Compile Include="FinishCommitResponse.cs" />
+    <Compile Include="NodeRole.cs" />
     <Compile Include="CohortNode.cs" />
+    <Compile Include="NodeSession.cs" />
+    <Compile Include="Opcode.cs" />
+    <Compile Include="PrepareCommitRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PuppetClient.cs" />
+    <Compile Include="Puppeteer.cs" />
+    <Compile Include="LocalPuppeteerServer.cs" />
+    <Compile Include="RemoteCachePuppet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\libdpo\libdpo.csproj">
+      <Project>{DA87B9E0-3584-4448-97B5-9877CAC44352}</Project>
+      <Name>libdpo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\libwarty\ItzWarty.csproj">
+      <Project>{097B6B08-4034-408A-B3C0-A12E8F9E8893}</Project>
+      <Name>ItzWarty</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libddn.client\libddn.client.csproj">
+      <Project>{735239BB-DDAA-42DC-854A-FEEE6BBF503E}</Project>
+      <Name>libddn.client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libddn.csproj">
+      <Project>{EEA8CBE9-90F7-4411-A7A5-A702C902D02F}</Project>
+      <Name>libddn</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
