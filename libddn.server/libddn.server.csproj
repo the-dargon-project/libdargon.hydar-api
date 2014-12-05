@@ -30,6 +30,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\NMockito.0.0.6\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="libdpo">
+      <HintPath>..\packages\libdsp.0.0.4\lib\net45\libdpo.dll</HintPath>
+    </Reference>
+    <Reference Include="libdsp">
+      <HintPath>..\packages\libdsp.0.0.4\lib\net45\libdsp.dll</HintPath>
+    </Reference>
+    <Reference Include="libwarty">
+      <HintPath>..\packages\libwarty.proxies-api.0.0.16\lib\net45\libwarty.dll</HintPath>
+    </Reference>
+    <Reference Include="libwarty.proxies-api">
+      <HintPath>..\packages\libwarty.proxies-api.0.0.16\lib\net45\libwarty.proxies-api.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\libdsp.0.0.4\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,14 +74,6 @@
     <Compile Include="RemoteCachePuppet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\libdpo\libdpo.csproj">
-      <Project>{DA87B9E0-3584-4448-97B5-9877CAC44352}</Project>
-      <Name>libdpo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\libwarty\ItzWarty.csproj">
-      <Project>{097B6B08-4034-408A-B3C0-A12E8F9E8893}</Project>
-      <Name>ItzWarty</Name>
-    </ProjectReference>
     <ProjectReference Include="..\libddn.client\libddn.client.csproj">
       <Project>{735239BB-DDAA-42DC-854A-FEEE6BBF503E}</Project>
       <Name>libddn.client</Name>
@@ -72,6 +82,9 @@
       <Project>{EEA8CBE9-90F7-4411-A7A5-A702C902D02F}</Project>
       <Name>libddn</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
