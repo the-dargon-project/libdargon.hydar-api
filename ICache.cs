@@ -1,15 +1,11 @@
-using System;
 using System.Collections.Generic;
 
-namespace Dargon.Distributed
-{
-   public interface ICache
-   {
+namespace Dargon.Distributed {
+   public interface ICache {
       string Name { get; }
    }
 
-   public interface ICache<K, V> : IDictionary<K, V>, ICache
-   {
+   public interface ICache<K, V> : IDictionary<K, V>, ICache {
       R Invoke<R>(K key, IEntryProcessor<K, V, R> entryProcessor);
       IDictionary<K, R> InvokeAll<R>(ISet<K> keys, IEntryProcessor<K, V, R> entryProcessor);
 

@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 using Dargon.PortableObjects;
 using ItzWarty;
 
-namespace Dargon.Distributed.Server
-{
-   public class LocalPuppeteerServer<K, V>
-   {
+namespace Dargon.Distributed.Server {
+   public class LocalPuppeteerServer<K, V> {
       private const int kListenerBacklogSize = 32;
-      
+
       private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
       private readonly CancellationToken cancellationToken;
       private readonly ICachePuppeteer<K, V> puppeteer;
@@ -19,8 +17,7 @@ namespace Dargon.Distributed.Server
       private readonly Thread processorThread;
       private readonly PofContext pofContext;
 
-      public LocalPuppeteerServer(ICachePuppeteer<K, V> puppeteer, DistributedConfiguration configuration)
-      {
+      public LocalPuppeteerServer(ICachePuppeteer<K, V> puppeteer, DistributedConfiguration configuration) {
          this.cancellationToken = cancellationTokenSource.Token;
          this.puppeteer = puppeteer;
          this.configuration = configuration;
@@ -29,8 +26,7 @@ namespace Dargon.Distributed.Server
          this.processorThread = new Thread(ProcessorThreadStart).With(t => { t.IsBackground = false; }).With(t => t.Start());
       }
 
-      private void ListenerThreadStart()
-      {
+      private void ListenerThreadStart() {
          var taskFactory = new TaskFactory<Socket>();
          while (!cancellationToken.IsCancellationRequested) {
             var listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -45,19 +41,15 @@ namespace Dargon.Distributed.Server
          }
       }
 
-      private void HandleNodeConnected(Socket nodeSocket)
-      {
+      private void HandleNodeConnected(Socket nodeSocket) {
          var session = new NodeSession(nodeSocket, NodeRole.Puppeteer);
          if (session.RemoteRole == NodeRole.Puppet) {
             this.puppeteer.RegisterPuppet(new RemoteCachePuppet<K, V>(configuration, session));
          }
       }
 
-      private void ProcessorThreadStart()
-      {
-         while (!cancellationToken.IsCancellationRequested) {
-
-         }
+      private void ProcessorThreadStart() {
+         while (!cancellationToken.IsCancellationRequested) {}
       }
    }
 }

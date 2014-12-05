@@ -1,12 +1,7 @@
-﻿
-namespace Dargon.Distributed
-{
-   public interface ICacheIndex
-   {
-      string Name { get; }  
+﻿namespace Dargon.Distributed {
+   public interface ICacheIndex {
+      string Name { get; }
    }
-   
-   public interface ICacheIndex<TKey, TValue, TProjection> : ICacheIndex
-   {
-   }
+
+   public interface ICacheIndex<TKey, TValue, TProjection> : ICacheIndex {}
 }
