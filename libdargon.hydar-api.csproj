@@ -7,8 +7,8 @@
     <ProjectGuid>{EEA8CBE9-90F7-4411-A7A5-A702C902D02F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dargon.Distributed</RootNamespace>
-    <AssemblyName>libdargon.imdg-api</AssemblyName>
+    <RootNamespace>Dargon.Hydar</RootNamespace>
+    <AssemblyName>libdargon.hydar-api</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

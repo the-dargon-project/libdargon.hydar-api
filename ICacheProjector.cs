@@ -1,4 +1,4 @@
-﻿namespace Dargon.Distributed {
+﻿namespace Dargon.Hydar {
    public interface ICacheProjector {}
 
    public interface ICacheProjector<TKey, TValue, TProjection> : ICacheProjector {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Dargon.Distributed {
+namespace Dargon.Hydar {
    public interface ICache {
       string Name { get; }
    }

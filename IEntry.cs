@@ -1,4 +1,4 @@
-﻿namespace Dargon.Distributed {
+﻿namespace Dargon.Hydar {
    public interface IEntry<TKey, TValue> {
       TKey Key { get; }
       TValue Value { get; set; }

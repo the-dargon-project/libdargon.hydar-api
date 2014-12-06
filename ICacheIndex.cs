@@ -1,4 +1,4 @@
-﻿namespace Dargon.Distributed {
+﻿namespace Dargon.Hydar {
    public interface ICacheIndex {
       string Name { get; }
    }
