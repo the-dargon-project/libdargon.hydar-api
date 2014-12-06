@@ -21,6 +21,6 @@ namespace Dargon.Hydar {
       IDictionary<K, V> GetMany(IEnumerable<K> keys);
       IDictionary<K, V> this[IEnumerable<K> keys] { get; }
 
-      IDictionary<K, V> GetAllValues();
+      IDictionary<K, V> GetAll();
    }
 }
