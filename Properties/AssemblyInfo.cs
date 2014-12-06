@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("libimdg")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("libdargon.imdg-api")]
+[assembly: AssemblyDescription("Dargon In-Memory Data Grid API")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("libimdg")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("The Dargon Project")]
+[assembly: AssemblyProduct("libdargon.imdg-api")]
+[assembly: AssemblyCopyright("Copyright © Michael 'ItzWarty' Yu 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
