@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Dargon.Hydar {
@@ -16,5 +17,10 @@ namespace Dargon.Hydar {
 
       ISet<IEntry<K, V>> FilterEntries<TProjection>(ICacheIndex<K, V, TProjection> cacheIndex, TProjection value);
       ISet<IEntry<K, V>> FilterEntries<TProjection>(ICacheIndex<K, V, TProjection> cacheIndex, IEntryProcessor<K, IFilterArgument<V, TProjection>, bool> filter);
+
+      IDictionary<K, V> GetMany(IEnumerable<K> keys);
+      IDictionary<K, V> this[IEnumerable<K> keys] { get; }
+
+      IDictionary<K, V> GetAllValues();
    }
 }
